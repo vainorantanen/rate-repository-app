@@ -1,7 +1,7 @@
-import { View, StyleSheet, Text, Pressable, ScrollView } from 'react-native';
+import { View, StyleSheet, Pressable, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import { Link } from 'react-router-native';
-
+import Text from './Text';
 
 const styles = StyleSheet.create({
   container: {
