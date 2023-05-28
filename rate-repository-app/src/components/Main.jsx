@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import { Route, Routes, Navigate } from 'react-router-native';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-native';
 
 import RepositoryList from './RepositoryList';
 import AppBar from './AppBar';
@@ -15,12 +15,14 @@ const styles = StyleSheet.create({
 });
 
 const Main = () => {
+  const navigate = useNavigate();
+
   return (
     <View style={styles.container}>
       <AppBar />
       <Routes>
         <Route path="/" element={<RepositoryList />} exact />
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn navigate={navigate}/>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>
