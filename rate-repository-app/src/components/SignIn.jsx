@@ -42,19 +42,8 @@ const styles = StyleSheet.create({
   },
 });
 
-const SignIn = ({navigate}) => {
-  const [signIn] = useSignIn();
-
-  const onSubmit = async (values) => {
-    const { username, password } = values;
-    try {
-      const { data } = await signIn({ username, password });
-      console.log("DATA", data);
-      navigate("/");
-    } catch (e) {
-      console.log(e);
-    }
-  };
+export const SignInContainer = ({ onSubmit }) => {
+  
 
   return (
     <View style={styles.container}>
@@ -75,6 +64,23 @@ const SignIn = ({navigate}) => {
       </Formik>
     </View>
   );
+}
+
+const SignIn = ({navigate}) => {
+  const [signIn] = useSignIn();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+    try {
+      const { data } = await signIn({ username, password });
+      console.log("DATA", data);
+      navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  return <SignInContainer onSubmit={onSubmit}/>
 };
 
 export default SignIn;
