@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories }) => {
+export const RepositoryListContainer = ({ repositories, navigate }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
@@ -20,17 +20,17 @@ export const RepositoryListContainer = ({ repositories }) => {
       data={repositoryNodes}
         ItemSeparatorComponent={ItemSeparator}
         // other props
-        renderItem={({item}) => <RepositoryItem item={item} />}
+        renderItem={({item}) => <RepositoryItem item={item} navigate={navigate} />}
           keyExtractor={item => item.id}
       />
       
     );
 };
 
-const RepositoryList = () => {
+const RepositoryList = ({navigate}) => {
   const { repositories } = useRepositories();
 
-  return <RepositoryListContainer repositories={repositories} />;
+  return <RepositoryListContainer repositories={repositories} navigate={navigate}/>;
 };
 
 export default RepositoryList;

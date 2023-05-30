@@ -18,6 +18,7 @@
     "@react-navigation/native": "^6.1.6",
     "dotenv": "^16.0.3",
     "expo": "~46.0.21",
+    "expo-linking": "~3.2.4",
     "expo-status-bar": "~1.4.0",
     "formik": "^2.2.9",
     "graphql": "^15.8.0",
@@ -52,6 +53,8 @@
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg|react-router-native)"
     ],
-    "setupFilesAfterEnv": ["<rootDir>/setupTests.js"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTests.js"
+    ]
   }
 }

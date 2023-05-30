@@ -1,7 +1,10 @@
 import React from 'react';
-import { View, Image, StyleSheet, Pressable } from 'react-native';
+import { View, Image, StyleSheet, Pressable, Linking } from 'react-native';
 import theme from '../theme';
 import Text from './Text';
+import { useParams } from 'react-router-native';
+import { useQuery } from '@apollo/client';
+import { SINGLE_REPO } from '../graphql/queries';
 
 const styles = StyleSheet.create({
     container: {
@@ -48,7 +51,17 @@ const styles = StyleSheet.create({
     flexGrow: 0,
     alignItems: 'center',
   },
-  
+  button: {
+    backgroundColor: theme.colors.primary,
+    padding: 10,
+    marginTop: 10,
+    borderRadius: 4,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });
 
 const formatCount = (count) => {
@@ -59,16 +72,38 @@ const formatCount = (count) => {
     return count.toString();
   };
 
-const RepositoryItem = ({ item, navigate }) => {
 
-  const navigateToRepoView = () => {
-    console.log("ITEI", item)
-    navigate(`/${item.id}`)
-  }
 
+const SingleRepo = () => {
+    const {id} = useParams()
+    
+    const { data, loading, error } = useQuery(SINGLE_REPO, { variables: { id } });
+
+    if (loading) {
+        // Handle loading state
+        return (
+          <View>
+            <Text>Loading user data</Text>
+          </View>
+        );
+      }
+    
+      if (error) {
+        // Handle error state
+        console.error('Error fetching user data:', error);
+        return null;
+      }
+
+    
+    console.log("data singless", data)  
+    const item = data.repository
+
+    const openInGitHub = () => {
+      Linking.openURL(item.url);
+    };
+      
   return (
-    <Pressable onPress={navigateToRepoView}>
-    <View testID="repositoryItem" style={styles.container}>
+    <View testID="SingleRepositoryItem" style={styles.container}>
       <View style={styles.picNInfo}>
         <Image
           style={styles.tinyLogo}
@@ -100,9 +135,13 @@ const RepositoryItem = ({ item, navigate }) => {
           <Text style={styles.infoText}>Rating</Text>
         </View>
       </View>
+      <Pressable onPress={openInGitHub} style={styles.button}>
+          <Text style={styles.buttonText}>Open in GitHub</Text>
+        </Pressable>
     </View>
-    </Pressable>
+        
   );
+  
 };
 
-export default RepositoryItem;
+export default SingleRepo
