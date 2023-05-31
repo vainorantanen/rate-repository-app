@@ -9,7 +9,7 @@ import SingleRepo from './SingleRepo';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: theme.colors.mainBackground,
+    backgroundColor: 'lightgray',
     flexGrow: 1,
     flexShrink: 1,
   },
