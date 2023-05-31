@@ -99,6 +99,7 @@ const AppBar = () => {
         ) : (
           <AppBarTab text="Sign in" to="/signin" onPress={() => {}}/>
         )}
+        {!user && <AppBarTab text="Sign up" to="/signup"/>}
       </ScrollView>
     </View>
   );

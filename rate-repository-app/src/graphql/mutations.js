@@ -22,16 +22,13 @@ mutation createReview($review: CreateReviewInput) {
 }
 `;
 
-/*
-mutation {
-  createReview(review: {rating: 10, repositoryName: "swr", ownerName: "zeit", text: "jargonia"}) {
-    rating
-    repository {
-      name
-      ownerName
-    }
-    text
+export const SIGN_UP = gql`
+mutation createUser($user: CreateUserInput) {
+  createUser(user: $user) {
+    id
+    username
   }
 }
+`;
 
-*/
+
