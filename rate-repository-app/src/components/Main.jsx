@@ -6,6 +6,7 @@ import AppBar from './AppBar';
 import theme from '../theme';
 import SignIn from './SignIn';
 import SingleRepo from './SingleRepo';
+import CreateReviewForm from './CreateReviewForm';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,6 +29,7 @@ const Main = () => {
           path="/:id"
           element={<SingleRepo />}
         />
+        <Route path="/create" element={<CreateReviewForm navigate={navigate}/>}/>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

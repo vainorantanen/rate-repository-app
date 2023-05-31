@@ -167,7 +167,10 @@ const ReviewItem = ({ review }) => {
 const SingleRepo = () => {
     const {id} = useParams()
     
-    const { data, loading, error } = useQuery(SINGLE_REPO, { variables: { id } });
+    const { data, loading, error } = useQuery(SINGLE_REPO,
+      { variables: { id }, 
+      fetchPolicy: 'cache-and-network'
+    });
 
     if (loading) {
         // Handle loading state
