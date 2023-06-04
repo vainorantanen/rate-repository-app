@@ -33,7 +33,7 @@ const Main = () => {
         />
         <Route path="/create" element={<CreateReviewForm navigate={navigate}/>}/>
         <Route path='/signup' element={<SignUpForm navigate={navigate}/>}/>
-        <Route path="/reviews" element={<MyReviews />} />
+        <Route path="/reviews" element={<MyReviews navigate={navigate}/>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

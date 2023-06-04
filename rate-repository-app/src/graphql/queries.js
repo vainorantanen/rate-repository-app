@@ -105,6 +105,8 @@ query Query($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $
 export const USER_REVIEWS = gql`
 query Query {
   me {
+    id
+    username
     reviews {
       edges {
         node {
@@ -116,6 +118,7 @@ query Query {
             id
             username
           }
+          repositoryId
         }
       }
     }
