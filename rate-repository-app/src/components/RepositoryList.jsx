@@ -3,7 +3,8 @@ import RepositoryItem from './RepositoryItem';
 import useRepositories from '../hooks/useRepositories';
 import { useState, useRef } from 'react';
 import {Picker} from '@react-native-picker/picker';
-
+import { Searchbar } from 'react-native-paper';
+import { useDebounce } from 'use-debounce';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,7 +34,7 @@ export const RepositoryListContainer = ({ repositories, navigate }) => {
     <FlatList
       data={repositoryNodes}
       ItemSeparatorComponent={ItemSeparator}
-      //ListHeaderComponent={SelectionComponent}
+      //ListHeaderComponent={SearchBar}
       renderItem={({ item }) => (
         <RepositoryItem item={item} navigate={navigate} />
       )}
@@ -61,14 +62,29 @@ const SelectionComponent = ({order, setOrder}) => {
   );
 };
 
+const SearchBar = ({searchQuery, setSearchQuery}) => {
+  const onChangeSearch = query => setSearchQuery(query);
+
+  return (
+    <Searchbar
+      placeholder="Search"
+      onChangeText={onChangeSearch}
+      value={searchQuery}
+    />
+  );
+};
+
 const RepositoryList = ({ navigate }) => {
   const [order, setOrder] = useState('latest');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedValue] = useDebounce(searchQuery, 500);
   // ominaisuus orderin valinnalle
 
-  const { repositories } = useRepositories({ order });
+  const { repositories } = useRepositories({ order, debouncedValue });
 
   return (
     <View style={styles.container}>
+      <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
       <SelectionComponent order={order} setOrder={setOrder}/>
       <RepositoryListContainer
         repositories={repositories}
