@@ -70,3 +70,36 @@ query repository($id: ID!) {
   }
 }
 `;
+
+export const ORDERED_REPOS = gql`
+query Query($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection) {
+  repositories(orderBy: $orderBy, orderDirection: $orderDirection) {
+    edges {
+      node {
+        description
+        forksCount
+        fullName
+        language
+        stargazersCount
+        reviewCount
+        ratingAverage
+        ownerName
+        ownerAvatarUrl
+        name
+        createdAt
+        id
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPreviousPage
+      startCursor
+    }
+    totalCount
+  }
+}
+
+
+`;
