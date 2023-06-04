@@ -59,7 +59,7 @@ const AppBarTab = ({ text, to, onPress }) => {
 };
 
 
-const AppBar = () => {
+const AppBar = ({navigate}) => {
   const { loading, error, data } = useQuery(ME);
   const authStorage = useAuthStorage(); // Access the authStorage instance
   const apolloClient = useApolloClient();
@@ -87,6 +87,7 @@ const AppBar = () => {
 
     // Redirect to the sign-in page or any desired location
     // You can use the useNavigate hook or any other navigation mechanism here
+    navigate('/')
   };
 
   return (
@@ -94,6 +95,7 @@ const AppBar = () => {
       <ScrollView horizontal contentContainerStyle={styles.scrollViewContainer}>
         <AppBarTab text="Repositories" to="/" />
         {user && <AppBarTab text="Create a review" to="/create"/>}
+        {user && <AppBarTab text="My reviews" to="/reviews"/>}
         {user ? (
           <AppBarTab text="Sign out" onPress={handleSignOut}/>
         ) : (

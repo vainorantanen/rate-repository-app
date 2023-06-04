@@ -8,6 +8,7 @@ import SignIn from './SignIn';
 import SingleRepo from './SingleRepo';
 import CreateReviewForm from './CreateReviewForm';
 import SignUpForm from './SignUpForm';
+import MyReviews from './MyReviews';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,7 @@ const Main = () => {
 
   return (
     <View style={styles.container}>
-      <AppBar />
+      <AppBar navigate={navigate}/>
       <Routes>
         <Route path="/" element={<RepositoryList navigate={navigate}/>} exact />
         <Route path="/signin" element={<SignIn navigate={navigate}/>} />
@@ -32,6 +33,7 @@ const Main = () => {
         />
         <Route path="/create" element={<CreateReviewForm navigate={navigate}/>}/>
         <Route path='/signup' element={<SignUpForm navigate={navigate}/>}/>
+        <Route path="/reviews" element={<MyReviews />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>

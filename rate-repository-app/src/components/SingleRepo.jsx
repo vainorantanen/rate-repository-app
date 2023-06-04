@@ -186,9 +186,7 @@ const SingleRepo = () => {
         console.error('Error fetching user data:', error);
         return null;
       }
-
-    
-    console.log("data singless", data)  
+ 
     const repository = data.repository
     const reviews = data.repository.reviews
     ? data.repository.reviews.edges.map((edge) => edge.node)

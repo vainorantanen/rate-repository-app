@@ -100,6 +100,25 @@ query Query($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $
     totalCount
   }
 }
+`;
 
-
+export const USER_REVIEWS = gql`
+query Query {
+  me {
+    reviews {
+      edges {
+        node {
+          id
+          text
+          createdAt
+          rating
+          user {
+            id
+            username
+          }
+        }
+      }
+    }
+  }
+}
 `;
