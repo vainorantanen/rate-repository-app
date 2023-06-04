@@ -41,7 +41,7 @@ export const ME = gql`
 `;
 
 export const SINGLE_REPO = gql`
-query repository($id: ID!) {
+query Query($id: ID!, $first: Int, $after: String) {
   repository(id: $id) {
     id
     fullName
@@ -53,27 +53,35 @@ query repository($id: ID!) {
     forksCount
     reviewCount
     ratingAverage
-    reviews {
+    reviews(first: $first, after: $after) {
       edges {
+        cursor
         node {
           id
-          text
           rating
           createdAt
+          text
           user {
             id
             username
           }
         }
       }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        startCursor
+        endCursor
+      }
+      totalCount
     }
   }
 }
 `;
 
 export const ORDERED_REPOS = gql`
-query Query($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String) {
-  repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword) {
+query Query($orderBy: AllRepositoriesOrderBy, $orderDirection: OrderDirection, $searchKeyword: String, $first: Int, $after: String) {
+  repositories(orderBy: $orderBy, orderDirection: $orderDirection, searchKeyword: $searchKeyword, first: $first, after: $after) {
     edges {
       node {
         description

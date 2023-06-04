@@ -62,7 +62,6 @@ const formatCount = (count) => {
 const RepositoryItem = ({ item, navigate }) => {
 
   const navigateToRepoView = () => {
-    console.log("ITEI", item)
     navigate(`/${item.id}`)
   }
 

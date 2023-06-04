@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 const ItemSeparator = () => <View style={styles.separator} />;
 
-export const RepositoryListContainer = ({ repositories, navigate }) => {
+export const RepositoryListContainer = ({ repositories, navigate, onEndReach }) => {
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
@@ -39,6 +39,8 @@ export const RepositoryListContainer = ({ repositories, navigate }) => {
         <RepositoryItem item={item} navigate={navigate} />
       )}
       keyExtractor={(item) => item.id}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
     </View>
   );
@@ -79,8 +81,18 @@ const RepositoryList = ({ navigate }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [debouncedValue] = useDebounce(searchQuery, 500);
   // ominaisuus orderin valinnalle
+  const obj = {
+      orderBy: order == 'highest' || order == 'lowest' ? 'RATING_AVERAGE' : 'CREATED_AT',
+      debouncedValue: debouncedValue,
+      orderDirection: order == 'latest' || order == 'highest' ? 'DESC' : 'ASC',
+      first: 5,
+    }
 
-  const { repositories } = useRepositories({ order, debouncedValue });
+  const { repositories, fetchMore } = useRepositories(obj);
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <View style={styles.container}>
@@ -89,6 +101,7 @@ const RepositoryList = ({ navigate }) => {
       <RepositoryListContainer
         repositories={repositories}
         navigate={navigate}
+        onEndReach={onEndReach}
       />
     </View>
   );

@@ -167,10 +167,17 @@ const ReviewItem = ({ review }) => {
 const SingleRepo = () => {
     const {id} = useParams()
     
-    const { data, loading, error } = useQuery(SINGLE_REPO,
-      { variables: { id }, 
+    const { data, loading, fetchMore, ...result } = useQuery(SINGLE_REPO,
+      { variables: {
+        id: id,
+        first: 5
+       }, 
       fetchPolicy: 'cache-and-network'
     });
+
+    const onEndReach = () => {
+      handleFetchMore()
+    };
 
     if (loading) {
         // Handle loading state
@@ -180,24 +187,36 @@ const SingleRepo = () => {
           </View>
         );
       }
-    
-      if (error) {
-        // Handle error state
-        console.error('Error fetching user data:', error);
-        return null;
-      }
  
     const repository = data.repository
     const reviews = data.repository.reviews
     ? data.repository.reviews.edges.map((edge) => edge.node)
     : [];
+
+    const handleFetchMore = () => {
+      const canFetchMore = !loading && data?.repository.reviews.pageInfo.hasNextPage;
+  
+      if (!canFetchMore) {
+        return;
+      }
+  
+      fetchMore({
+        variables: {
+          after: data.repository.reviews.pageInfo.endCursor,
+          first: 5,
+          id: id
+        },
+      });
+    };
+
     return (
     <FlatList
       data={reviews}
       renderItem={({ item }) => <ReviewItem review={item} />}
       keyExtractor={({ id }) => id}
       ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
-      // ...
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.5}
     />
   );
   
